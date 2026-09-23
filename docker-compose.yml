@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: todo-postgres
+    environment:
+      POSTGRES_DB: tododb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    networks:
+      - db-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  db-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
