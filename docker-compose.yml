@@ -5,19 +5,28 @@ services:
     image: postgres:16-alpine
     container_name: todo-postgres
     environment:
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: tododb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
     ports:
       - "5432:5432"
     networks:
-      - db-network
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - todo-net
+
+  backend:
+    build: ./backend
+    container_name: todo-backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/tododb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+    ports:
+      - "8080:8080"
+    networks:
+      - todo-net
 
 networks:
-  db-network:
-    driver: bridge
-
-volumes:
-  postgres_data:
+  todo-net:
