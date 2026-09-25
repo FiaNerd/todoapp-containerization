@@ -15,4 +15,9 @@ public class TodoService {
 	public List<Todo> getAllTodos(){
 		return todoRepository.findAll();
 	}
+
+	// Se till att namnet matchar det du anropar i controllern!
+	public void addTodo(Todo todo) {
+		todoRepository.save(todo);
+	}
 }

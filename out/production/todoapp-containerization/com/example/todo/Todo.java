@@ -73,8 +73,11 @@ public class Todo {
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) return true;
+
 		if (object == null || getClass() != object.getClass()) return false;
+
 		Todo todo = (Todo) object;
+
 		return completed == todo.completed
 				&& Objects.equals(id, todo.id)
 				&& Objects.equals(name, todo.name)
