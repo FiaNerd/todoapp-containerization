@@ -1,6 +1,7 @@
 package com.example.todo;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -36,5 +37,12 @@ public class TodoService {
 		todoItem.setCompleted(todo.isCompleted());
 
 		return todoRepository.save(todoItem);
+	}
+
+	public void deleteItem(Long id){
+		Todo todoItem = todoRepository.findById(id)
+				.orElseThrow(() -> new IllegalStateException(id + "not found"));
+
+		todoRepository.delete(todoItem);
 	}
 }
