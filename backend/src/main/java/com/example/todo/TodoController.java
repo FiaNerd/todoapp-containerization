@@ -20,4 +20,14 @@ public class TodoController {
 	 public void addNewItem(@RequestBody Todo todo) {
 			todoService.addTodo(todo);
 	 }
+
+	@GetMapping("/{id}")
+	public Todo getItemById(@PathVariable Long id){
+		return todoService.getTodoById(id);
+	}
+
+	@PatchMapping("/{id}")
+	public Todo updateItemById(@RequestBody Todo todo,@PathVariable Long id){
+		return todoService.updateTodoById(todo, id);
+	}
  }

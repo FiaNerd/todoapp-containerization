@@ -20,4 +20,21 @@ public class TodoService {
 	public void addTodo(Todo todo) {
 		todoRepository.save(todo);
 	}
+
+	public Todo getTodoById(Long id) {
+		return todoRepository.findById(id)
+				.orElseThrow(() -> new IllegalStateException(id + "not found"));
+	}
+
+	public Todo updateTodoById(Todo todo, Long id) {
+		Todo todoItem = todoRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException(id + "not found"));
+
+		todoItem.setName(todo.getName());
+		todoItem.setCategory(todo.getCategory());
+		todoItem.setDescription(todo.getDescription());
+		todoItem.setCompleted(todo.isCompleted());
+
+		return todoRepository.save(todoItem);
+	}
 }
