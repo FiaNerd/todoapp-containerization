@@ -17,19 +17,18 @@ public class TodoService {
 		return todoRepository.findAll();
 	}
 
-	// Se till att namnet matchar det du anropar i controllern!
-	public void addTodo(Todo todo) {
-		todoRepository.save(todo);
+	public Todo addTodo(Todo todo) {
+		return todoRepository.save(todo);
 	}
 
 	public Todo getTodoById(Long id) {
 		return todoRepository.findById(id)
-				.orElseThrow(() -> new IllegalStateException(id + "not found"));
+				.orElseThrow(() -> new IllegalStateException(id + " not found"));
 	}
 
 	public Todo updateTodoById(Todo todo, Long id) {
 		Todo todoItem = todoRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException(id + "not found"));
+				.orElseThrow(() -> new RuntimeException(id + " not found"));
 
 		todoItem.setName(todo.getName());
 		todoItem.setCategory(todo.getCategory());
@@ -41,7 +40,7 @@ public class TodoService {
 
 	public void deleteItem(Long id){
 		Todo todoItem = todoRepository.findById(id)
-				.orElseThrow(() -> new IllegalStateException(id + "not found"));
+				.orElseThrow(() -> new IllegalStateException(id + " not found"));
 
 		todoRepository.delete(todoItem);
 	}
