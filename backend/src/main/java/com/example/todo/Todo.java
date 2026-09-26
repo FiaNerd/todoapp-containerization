@@ -14,19 +14,15 @@ public class Todo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
-	private String category;
-	private String description;
+	private String title;
 	private boolean completed;
 
 	public Todo() {
 	}
 
-	public Todo(Long id, String name, String category, String description, boolean completed) {
+	public Todo(Long id, String title, boolean completed) {
 		this.id = id;
-		this.name = name;
-		this.category = category;
-		this.description = description;
+		this.title = title;
 		this.completed = completed;
 	}
 
@@ -38,28 +34,12 @@ public class Todo {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public boolean isCompleted() {
@@ -73,20 +53,15 @@ public class Todo {
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) return true;
-
 		if (object == null || getClass() != object.getClass()) return false;
-
 		Todo todo = (Todo) object;
-
 		return completed == todo.completed
 				&& Objects.equals(id, todo.id)
-				&& Objects.equals(name, todo.name)
-				&& Objects.equals(category, todo.category)
-				&& Objects.equals(description, todo.description);
+				&& Objects.equals(title, todo.title);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, category, description, completed);
+		return Objects.hash(id, title, completed);
 	}
 }

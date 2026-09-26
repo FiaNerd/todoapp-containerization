@@ -1,7 +1,6 @@
 package com.example.todo;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -30,9 +29,7 @@ public class TodoService {
 		Todo todoItem = todoRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException(id + " not found"));
 
-		todoItem.setName(todo.getName());
-		todoItem.setCategory(todo.getCategory());
-		todoItem.setDescription(todo.getDescription());
+		todoItem.setTitle(todo.getTitle());
 		todoItem.setCompleted(todo.isCompleted());
 
 		return todoRepository.save(todoItem);
