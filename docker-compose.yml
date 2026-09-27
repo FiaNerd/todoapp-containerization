@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: tododb
     ports:
       - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - todo-net
 
@@ -26,6 +28,19 @@ services:
       - "8080:8080"
     networks:
       - todo-net
+
+  frontend:
+    build: ./frontend
+    container_name: todo-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - todo-net
+
+volumes:
+  postgres_data:
 
 networks:
   todo-net:
