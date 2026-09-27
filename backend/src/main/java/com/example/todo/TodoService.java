@@ -25,16 +25,17 @@ public class TodoService {
 				.orElseThrow(() -> new IllegalStateException(id + " not found"));
 	}
 
-	public Todo updateTodoById(Todo todo, Long id) {
-		Todo todoItem = todoRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException(id + " not found"));
+	public Todo updateTodoById(Todo newTodoData, Long id) {
+		Todo existingTodo = getTodoById(id);
 
-		todoItem.setTitle(todo.getTitle());
-		todoItem.setCompleted(todo.isCompleted());
+		if (newTodoData.getTitle() != null) {
+			existingTodo.setTitle(newTodoData.getTitle());
+		}
 
-		return todoRepository.save(todoItem);
+		existingTodo.setCompleted(newTodoData.isCompleted());
+
+		return todoRepository.save(existingTodo);
 	}
-
 	public void deleteItem(Long id){
 		Todo todoItem = todoRepository.findById(id)
 				.orElseThrow(() -> new IllegalStateException(id + " not found"));
