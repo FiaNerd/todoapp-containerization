@@ -1,27 +1,46 @@
 version: '3.8'
 
+volumes:
+  postgres_data:
+
 services:
   postgres:
     image: postgres:16-alpine
     container_name: todo-postgres
     environment:
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: password
       POSTGRES_DB: tododb
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/18/docker
+    networks:
+      - todo-net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: todo-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
     networks:
       - todo-net
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: todo-backend
     depends_on:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/tododb
-      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
@@ -30,7 +49,9 @@ services:
       - todo-net
 
   frontend:
-    build: ./frontend
+    build:
+     context: ./frontend
+     dockerfile: Dockerfile
     container_name: todo-frontend
     ports:
       - "80:80"
@@ -38,9 +59,6 @@ services:
       - backend
     networks:
       - todo-net
-
-volumes:
-  postgres_data:
 
 networks:
   todo-net:
