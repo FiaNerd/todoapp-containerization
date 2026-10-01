@@ -6,7 +6,7 @@ export default function TodosPage() {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [newTitle, setNewTitle] = useState('');
 
-    const API_URL = 'http://localhost:8080/api/todos';
+const API_URL = '/api/todos'
 
     useEffect(() => {
         fetch(API_URL)
